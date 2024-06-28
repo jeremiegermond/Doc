@@ -4,14 +4,42 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background: #f8f8f8;
+  @apply font-poly-sans;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* region Font */
+@font-face {
+  font-family: 'PolySans-Median';
+  src: url('../public/fonts/PolySans-Median.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }
+
+@font-face {
+  font-family: 'PolySans-Slim';
+  src: url('../public/fonts/PolySans-Slim.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PolySans-Bulky';
+  src: url('../public/fonts/PolySans-Bulky.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-poly-sans {
+  font-family: 'PolySans-Median', sans-serif;
+}
+
+.font-poly-sans-slim {
+  font-family: 'PolySans-Slim', sans-serif;
+}
+
+.font-poly-sans-bulky {
+  font-family: 'PolySans-Bulky', sans-serif;
+}
+
+/* endregion */

@@ -1,8 +1,12 @@
+import Navbar from "./components/navbar";
+import Home from "./pages/Home";
+
 function App() {
   return (
-    <div className="bg-red-500">
-      lol
-    </div>
+    <>
+      <Navbar />
+      <Home />
+    </>
   );
 }
 
