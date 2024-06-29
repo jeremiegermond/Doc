@@ -27,6 +27,15 @@ export default function Button({ children, color, onClick }) {
           {children}
         </button>
       );
+    case "blueT":
+      return (
+        <button
+          className="bg-transparent text-blue-500 border-2 border-blue-500 hover-animation px-4 py-2 rounded-full shadow-lg lg:text-[18px]"
+          onClick={onClick}
+        >
+          {children}
+        </button>
+      );
     default:
       return (
         <button

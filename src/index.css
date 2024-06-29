@@ -53,3 +53,18 @@ body {
   transform: scale(1.02);
   transition: all 0.3s ease;
 }
+/* endregion */
+
+/* region Scrollbar */
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* endregion */
+
