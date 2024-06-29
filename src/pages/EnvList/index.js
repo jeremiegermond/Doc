@@ -1,7 +1,9 @@
 export default function EnvList() {
   return (
     <div className="w-[90%] flex-col mx-auto mt-12">
-      env
+      <div className="mx-auto w-1/2 h-[70vh] border-t-8 border-t-indigo-500 rounded-md bg-white p-8 shadow-lg">
+        <h1 className="text-2xl font-bold">Env List</h1>
+      </div>
     </div>
   );
 }
