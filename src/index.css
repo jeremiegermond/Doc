@@ -43,3 +43,13 @@ body {
 }
 
 /* endregion */
+
+/* region Animation */
+.hover-animation {
+  transition: all 0.3s ease;
+}
+
+.hover-animation:hover {
+  transform: scale(1.02);
+  transition: all 0.3s ease;
+}
