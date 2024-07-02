@@ -45,6 +45,7 @@ export default function EnvList() {
     setCurrentIndex(index);
     setCurrentKey(key);
     setCurrentValue(envs[index][key]);
+    setModalContent("edit");
     setIsModalOpen(true);
   };
 
