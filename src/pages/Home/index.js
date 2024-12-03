@@ -13,7 +13,10 @@ export default function Home() {
 
       {/* Other */}
       <HomeHeader title={"Other"} />
-      <Card title={"Env list"} icon={<FaRegFileCode />} linkUrl={"/env"} />
+      <div className="flex flex-row space-x-12">
+        <Card title={"Env list"} icon={<FaRegFileCode />} linkUrl={"/env"} />
+        <Card title={"Doc"} icon={<FaRegFileCode />} linkUrl={"/doc"} />
+      </div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import GoBack from "./components/GoBack";
 import Home from "./pages/Home";
 import BotList from "./pages/BotList";
 import EnvList from "./pages/EnvList";
+import GenerateDoc from "./pages/Doc";
 
 function Layout() {
   const location = useLocation();
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/bots" element={<BotList />} />
         <Route path="/env" element={<EnvList />} />
+        <Route path="/doc" element={<GenerateDoc />} />
       </Routes>
     </BrowserRouter>
   );
