@@ -35,27 +35,29 @@ export default function GenerateDoc() {
   const [markdownContent, setMarkdownContent] = useState("");
   const [categories, setCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeDoc, setActiveDoc] = useState("dev");
+
+  const docUrls = {
+    dev: "https://api.github.com/repos/Aizy-app/Toolbox/contents/documentation/dev.md",
+    prod: "https://api.github.com/repos/Aizy-app/Toolbox/contents/documentation/prod.md",
+  };
 
   useEffect(() => {
     const fetchMarkdown = async () => {
       const token = process.env.REACT_APP_GITHUB_TOKEN;
 
       try {
-        const response = await fetch(
-          "https://api.github.com/repos/Aizy-app/API/contents/doc/documentation.md",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch(docUrls[activeDoc], {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (!response.ok) {
           throw new Error(`Erreur : ${response.status}`);
         }
 
         const data = await response.json();
-
         const decodedContent = atob(data.content);
         setMarkdownContent(decodedContent);
       } catch (error) {
@@ -64,7 +66,7 @@ export default function GenerateDoc() {
     };
 
     fetchMarkdown();
-  }, []);
+  }, [activeDoc, docUrls]);
 
   useEffect(() => {
     if (markdownContent) {
@@ -130,7 +132,6 @@ export default function GenerateDoc() {
     }
   }, [markdownContent]);
 
-  // Fonction de filtrage
   const filterCategories = (categories) => {
     if (!searchQuery) return categories;
 
@@ -153,6 +154,29 @@ export default function GenerateDoc() {
 
   return (
     <div className="w-[70%] mx-auto mt-12 bg-white shadow-md p-8 rounded-lg">
+      <div className="flex justify-center mb-6">
+        <button
+          className={`px-4 py-2 rounded-l-md ${
+            activeDoc === "dev"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-600"
+          }`}
+          onClick={() => setActiveDoc("dev")}
+        >
+          Dev
+        </button>
+        <button
+          className={`px-4 py-2 rounded-r-md ${
+            activeDoc === "prod"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-600"
+          }`}
+          onClick={() => setActiveDoc("prod")}
+        >
+          Prod
+        </button>
+      </div>
+
       <div className="mb-6">
         <input
           type="text"
