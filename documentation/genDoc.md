@@ -186,7 +186,8 @@ Search for a user
     }
   ],
   "page": 1,
-  "limit": 10
+  "limit": 10,
+  "elements": 2
 }
 ```
 ###### source: user.authentication.searchProfile
@@ -801,7 +802,8 @@ Search through existing tags
     }
   ],
   "page": 1,
-  "limit": 10
+  "limit": 10,
+  "elements": 1
 }
 ```
 ###### source: bots.BotsControllerPublic.searchTags
@@ -1091,7 +1093,7 @@ Create a notification!
 {
   "success": true,
   "data": {
-    "notificationId": "tH6xcJYEXuUpDns_MDVzG",
+    "notificationId": "iuAveEJ7WNRyB4DWkxn55",
     "url": ""
   }
 }
@@ -1118,7 +1120,7 @@ Delete a notification
 ```json
 {
   "success": true,
-  "data": "Notification am_lwB7qmRW8yqObDb-rR successfully deleted"
+  "data": "Notification Bd5hBvSsGfb5bohm0PWTj successfully deleted"
 }
 ```
 ###### source: notification.NotificationController.delete
