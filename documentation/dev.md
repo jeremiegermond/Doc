@@ -308,24 +308,86 @@ Change the connected user's password
 ```
 ###### source: user.UserController.changePassword
 ---
-## Link Exchange
-#### POST  v1/user/exchange/link
-Link an exchange to the connected user's account
+## Link Alpaca Account
+#### POST  v1/user/exchange/alpaca
+Link an Alpaca trading account to the user
 #### Payload
 ##### body
 |Field|Type|Required|Additional informations|
 |---|:-:|:-:|---|
-|**exchange**|string|true|{}|
-|**apiKeys**|any|true|{}|
+|**apiKey**|string|true|{}|
+|**secretKey**|string|true|{}|
 #### Returns
+##### 200
+```json
+{
+  "success": true,
+  "data": "Alpaca success"
+}
+```
 ##### 400
 ```json
 {
   "success": false,
-  "data": "operation failed"
+  "data": "Missing required value : secretKey in body"
 }
 ```
-###### source: user.UserController.linkExchange
+##### 403
+```json
+{
+  "success": false,
+  "data": "Forbidden Alpaca"
+}
+```
+###### source: user.UserController.linkAlpaca
+---
+## Delink Alpaca Account
+#### DELETE  v1/user/exchange/alpaca
+Remove the linked Alpaca trading account from the user
+#### Payload
+No payload
+#### Returns
+##### 200
+```json
+{
+  "success": true,
+  "data": "operation success"
+}
+```
+###### source: user.UserController.delinkAlpaca
+---
+## Update Alpaca Account
+#### PATCH  v1/user/exchange/alpaca
+Update the Alpaca trading account credentials
+#### Payload
+##### body
+|Field|Type|Required|Additional informations|
+|---|:-:|:-:|---|
+|**apiKey**|string|true|{}|
+|**secretKey**|string|true|{}|
+#### Returns
+##### 200
+```json
+{
+  "success": true,
+  "data": "Alpaca successfully updated"
+}
+```
+##### 400
+```json
+{
+  "success": false,
+  "data": "Missing required value : secretKey in body"
+}
+```
+##### 403
+```json
+{
+  "success": false,
+  "data": "Forbidden Alpaca"
+}
+```
+###### source: user.UserController.updateAlpaca
 ---
 ## Become Dev
 #### POST  v1/user/dev
@@ -1079,7 +1141,7 @@ No payload
 # Notification
 ## Create a notification
 #### POST  v1/notification
-Create a notification
+Create a notification!
 #### Payload
 ##### body
 |Field|Type|Required|Additional informations|
@@ -1093,7 +1155,7 @@ Create a notification
 {
   "success": true,
   "data": {
-    "notificationId": "q12ntSWsifWb4RkuHF5uz",
+    "notificationId": "i75elP9458IXwivKoa3XY",
     "url": ""
   }
 }
@@ -1120,7 +1182,7 @@ Delete a notification
 ```json
 {
   "success": true,
-  "data": "Notification EOnTPSasbetvmI69y5Rbm successfully deleted"
+  "data": "Notification Iac1ZBu63GwzR5jRddJTe successfully deleted"
 }
 ```
 ###### source: notification.NotificationController.delete
@@ -1305,7 +1367,7 @@ Edit a trade associated with a bot
 ---
 # Admin
 ## Login (no tests !)
-#### POST  v1/employees/login
+#### POST  v1/admin/login
 Login as an admin
 #### Payload
 No payload
@@ -1313,8 +1375,8 @@ No payload
 ###### source: admin.AdminsAuth.login
 ---
 ## Register (no tests !)
-#### POST  v1/employees/register
-Register a new admin
+#### POST  v1/admin/register
+Register a new admin. Password is randomly generated and sent by email.
 #### Payload
 No payload
 #### Returns
