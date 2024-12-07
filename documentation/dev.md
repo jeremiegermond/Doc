@@ -1139,34 +1139,12 @@ No payload
 ###### source: bots.BotsControllerProtected.getLogs
 ---
 # Notification
-## Create a notification
+## Create a notification (depreacted) (no tests !)
 #### POST  v1/notification
 Create a notification!
 #### Payload
-##### body
-|Field|Type|Required|Additional informations|
-|---|:-:|:-:|---|
-|**title**|string|true|{}|
-|**description**|string|true|{}|
-|**userIds**|any|true|{}|
+No payload
 #### Returns
-##### 201
-```json
-{
-  "success": true,
-  "data": {
-    "notificationId": "i75elP9458IXwivKoa3XY",
-    "url": ""
-  }
-}
-```
-##### 400
-```json
-{
-  "success": false,
-  "data": "Missing required value : userIds in body"
-}
-```
 ###### source: notification.NotificationController.create
 ---
 ## Delete a notification
@@ -1182,33 +1160,10 @@ Delete a notification
 ```json
 {
   "success": true,
-  "data": "Notification Iac1ZBu63GwzR5jRddJTe successfully deleted"
+  "data": "Notification YpMwoO2YBmtk7Y_IugaVv successfully deleted"
 }
 ```
 ###### source: notification.NotificationController.delete
----
-## Get notifications
-#### GET  v1/notification/list/:userId
-Get notifications
-#### Payload
-##### params
-|Field|Type|Required|Additional informations|
-|---|:-:|:-:|---|
-|**userId**|string|true|{}|
-##### query
-|Field|Type|Required|Additional informations|
-|---|:-:|:-:|---|
-|**limit**|number|false|{}|
-|**skip**|number|false|{}|
-#### Returns
-##### 200
-```json
-{
-  "success": true,
-  "data": []
-}
-```
-###### source: notification.NotificationController.get
 ---
 ## Patch notifications
 #### PATCH  v1/notification/seen
@@ -1226,11 +1181,11 @@ Patch notifications
   "data": [
     {
       "_id": "unique identifier",
-      "title": "testNotif",
-      "description": "descriptionNotif",
-      "url": "",
+      "description": "test is now following you.",
+      "type": 1,
+      "image": "/v1/avatar/bhSdDWg_6cSwkO8KMGqqG",
       "userIds": [
-        null
+        "Xvi4wuIrc7FwjwU-hBbJ_"
       ],
       "seen": true,
       "createdAt": "timestamp in YYYY-MM-DDTHH:MM:SSZ format",
