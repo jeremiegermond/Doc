@@ -310,7 +310,7 @@ Change the connected user's password
 ---
 ## Link Alpaca Account
 #### POST  v1/user/exchange/alpaca
-Link an Alpaca trading account to the user
+Link an Alpaca trading account to the user, can be called on already linked accounts to update the credentials
 #### Payload
 ##### body
 |Field|Type|Required|Additional informations|
@@ -322,7 +322,7 @@ Link an Alpaca trading account to the user
 ```json
 {
   "success": true,
-  "data": "Alpaca success"
+  "data": "Alpaca link success"
 }
 ```
 ##### 400
@@ -330,13 +330,6 @@ Link an Alpaca trading account to the user
 {
   "success": false,
   "data": "Missing required value : secretKey in body"
-}
-```
-##### 403
-```json
-{
-  "success": false,
-  "data": "Forbidden Alpaca"
 }
 ```
 ###### source: user.UserController.linkAlpaca
@@ -355,39 +348,6 @@ No payload
 }
 ```
 ###### source: user.UserController.delinkAlpaca
----
-## Update Alpaca Account
-#### PATCH  v1/user/exchange/alpaca
-Update the Alpaca trading account credentials
-#### Payload
-##### body
-|Field|Type|Required|Additional informations|
-|---|:-:|:-:|---|
-|**apiKey**|string|true|{}|
-|**secretKey**|string|true|{}|
-#### Returns
-##### 200
-```json
-{
-  "success": true,
-  "data": "Alpaca successfully updated"
-}
-```
-##### 400
-```json
-{
-  "success": false,
-  "data": "Missing required value : secretKey in body"
-}
-```
-##### 403
-```json
-{
-  "success": false,
-  "data": "Forbidden Alpaca"
-}
-```
-###### source: user.UserController.updateAlpaca
 ---
 ## Become Dev
 #### POST  v1/user/dev
@@ -1160,7 +1120,7 @@ Delete a notification
 ```json
 {
   "success": true,
-  "data": "Notification YpMwoO2YBmtk7Y_IugaVv successfully deleted"
+  "data": "Notification DQ4SHbWWGPgQTFfE0jeUm successfully deleted"
 }
 ```
 ###### source: notification.NotificationController.delete
@@ -1183,9 +1143,9 @@ Patch notifications
       "_id": "unique identifier",
       "description": "test is now following you.",
       "type": 1,
-      "image": "/v1/avatar/bhSdDWg_6cSwkO8KMGqqG",
+      "image": "/v1/avatar/KNoB-u-LOUo5LL_-IVPKB",
       "userIds": [
-        "Xvi4wuIrc7FwjwU-hBbJ_"
+        "Gw9M1lRvv3g8h_3T1rELO"
       ],
       "seen": true,
       "createdAt": "timestamp in YYYY-MM-DDTHH:MM:SSZ format",
