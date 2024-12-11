@@ -186,8 +186,7 @@ Search for a user
     }
   ],
   "page": 1,
-  "limit": 10,
-  "elements": 2
+  "limit": 10
 }
 ```
 ###### source: user.authentication.searchProfile
@@ -254,7 +253,8 @@ No payload
     "notifications": {
       "total": 0,
       "not_seen": 0
-    }
+    },
+    "exchanges": []
   }
 }
 ```
@@ -1120,7 +1120,7 @@ Delete a notification
 ```json
 {
   "success": true,
-  "data": "Notification DQ4SHbWWGPgQTFfE0jeUm successfully deleted"
+  "data": "Notification pd7VVu9xzXADZcibR9hu5 successfully deleted"
 }
 ```
 ###### source: notification.NotificationController.delete
@@ -1143,9 +1143,9 @@ Patch notifications
       "_id": "unique identifier",
       "description": "test is now following you.",
       "type": 1,
-      "image": "/v1/avatar/KNoB-u-LOUo5LL_-IVPKB",
+      "image": "/v1/avatar/HEi4l65orOCiHwUWKw4bn",
       "userIds": [
-        "Gw9M1lRvv3g8h_3T1rELO"
+        "VQ0ofNZJBFI9q37wbeeuC"
       ],
       "seen": true,
       "createdAt": "timestamp in YYYY-MM-DDTHH:MM:SSZ format",
