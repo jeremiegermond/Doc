@@ -43,6 +43,8 @@ export default function GenerateDoc() {
       prod: "https://api.github.com/repos/Aizy-app/Toolbox/contents/documentation/prod.md",
     };
 
+    console.log("Fetching Markdown content...");
+
     const fetchMarkdown = async () => {
       const token = process.env.REACT_APP_GITHUB_TOKEN;
 
