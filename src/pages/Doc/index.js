@@ -37,12 +37,12 @@ export default function GenerateDoc() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeDoc, setActiveDoc] = useState("dev");
 
-  const docUrls = {
-    dev: "https://api.github.com/repos/Aizy-app/Toolbox/contents/documentation/dev.md",
-    prod: "https://api.github.com/repos/Aizy-app/Toolbox/contents/documentation/prod.md",
-  };
-
   useEffect(() => {
+    const docUrls = {
+      dev: "https://api.github.com/repos/Aizy-app/Toolbox/contents/documentation/dev.md",
+      prod: "https://api.github.com/repos/Aizy-app/Toolbox/contents/documentation/prod.md",
+    };
+
     const fetchMarkdown = async () => {
       const token = process.env.REACT_APP_GITHUB_TOKEN;
 
@@ -66,7 +66,7 @@ export default function GenerateDoc() {
     };
 
     fetchMarkdown();
-  }, [activeDoc, docUrls]);
+  }, [activeDoc]);
 
   useEffect(() => {
     if (markdownContent) {
@@ -76,58 +76,40 @@ export default function GenerateDoc() {
       let currentCategory = null;
 
       for (let i = 0; i < lines.length; i++) {
-        let line = lines[i].trim();
+        const line = lines[i].trim();
 
         if (line.startsWith("# ")) {
           currentCategory = {
             title: line.replace(/^#\s/, ""),
-            subcategories: [],
+            sections: [],
           };
           parsedCategories.push(currentCategory);
           continue;
         }
 
-        if (line.startsWith("###### ")) {
-          const categoryName = line.match(/source:.*?\.([^.]+)\./)?.[1];
-
-          let existingSubcategory = currentCategory?.subcategories.find(
-            (subcat) => subcat.title === categoryName
-          );
-
-          if (!existingSubcategory) {
-            existingSubcategory = {
-              title: categoryName,
-              sections: [],
-            };
-            currentCategory?.subcategories.push(existingSubcategory);
-          }
-          continue;
-        }
-
         if (line.startsWith("## ")) {
           const sectionTitle = line.replace(/^##\s/, "");
-          const lastSubcategory =
-            currentCategory?.subcategories[currentCategory.subcategories.length - 1];
-
-          if (lastSubcategory) {
-            lastSubcategory.sections.push({
-              title: sectionTitle,
-              content: "",
-            });
-          }
+          currentCategory?.sections.push({
+            title: sectionTitle,
+            content: "",
+          });
           continue;
         }
 
         if (currentCategory) {
-          const lastSubcategory = currentCategory.subcategories[currentCategory.subcategories.length - 1];
-          const lastSection = lastSubcategory?.sections[lastSubcategory.sections.length - 1];
+          const lastSection =
+            currentCategory.sections[currentCategory.sections.length - 1];
 
           if (lastSection) {
+            if (line === "---") {
+              continue;
+            }
             lastSection.content += (lastSection.content ? "\n" : "") + line;
           }
         }
       }
 
+      console.log("Parsed categories:", parsedCategories);
       setCategories(parsedCategories);
     }
   }, [markdownContent]);
@@ -140,15 +122,12 @@ export default function GenerateDoc() {
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
 
-      const subcategoriesMatches = category.subcategories.some((subcategory) =>
-        subcategory.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        subcategory.sections.some((section) =>
-          section.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          section.content.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+      const sectionsMatches = category.sections.some((section) =>
+        section.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        section.content.toLowerCase().includes(searchQuery.toLowerCase())
       );
 
-      return categoryMatches || subcategoriesMatches;
+      return categoryMatches || sectionsMatches;
     });
   };
 
@@ -189,75 +168,67 @@ export default function GenerateDoc() {
 
       {filterCategories(categories).map((category, catIndex) => (
         <CollapsibleSection key={catIndex} title={category.title} level={1}>
-          {category.subcategories.map((subcategory, subIndex) => (
+          {category.sections.map((section, secIndex) => (
             <CollapsibleSection
-              key={subIndex}
-              title={subcategory.title}
+              key={secIndex}
+              title={section.title}
               level={2}
             >
-              {subcategory.sections.map((section, secIndex) => (
-                <CollapsibleSection
-                  key={secIndex}
-                  title={section.title}
-                  level={3}
-                >
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    components={{
-                      h2: ({ children }) => (
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4 mt-6">
-                          {children}
-                        </h2>
-                      ),
-                      h3: ({ children }) => (
-                        <h3 className="text-lg font-medium text-gray-700 mb-3">
-                          {children}
-                        </h3>
-                      ),
-                      p: ({ children }) => (
-                        <p className="text-base text-gray-700 leading-7 mb-4">
-                          {children}
-                        </p>
-                      ),
-                      ul: ({ children }) => (
-                        <ul className="list-disc ml-6 text-gray-700 mb-4">
-                          {children}
-                        </ul>
-                      ),
-                      ol: ({ children }) => (
-                        <ol className="list-decimal ml-6 text-gray-700 mb-4">
-                          {children}
-                        </ol>
-                      ),
-                      code: ({ inline, children }) =>
-                        inline ? (
-                          <code className="bg-gray-200 text-red-500 rounded px-1">
-                            {children}
-                          </code>
-                        ) : (
-                          <pre className="bg-gray-800 text-white rounded p-4 overflow-auto text-sm">
-                            <code>{children}</code>
-                          </pre>
-                        ),
-                      table: ({ children }) => (
-                        <table className="table-auto border-collapse border border-gray-300 w-full text-sm text-gray-700 mb-6">
-                          {children}
-                        </table>
-                      ),
-                      th: ({ children }) => (
-                        <th className="border border-gray-300 bg-gray-100 px-4 py-2 text-left font-semibold">
-                          {children}
-                        </th>
-                      ),
-                      td: ({ children }) => (
-                        <td className="border border-gray-300 px-4 py-2">{children}</td>
-                      ),
-                    }}
-                  >
-                    {section.content}
-                  </ReactMarkdown>
-                </CollapsibleSection>
-              ))}
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  h2: ({ children }) => (
+                    <h2 className="text-xl font-semibold text-gray-800 mb-4 mt-6">
+                      {children}
+                    </h2>
+                  ),
+                  h3: ({ children }) => (
+                    <h3 className="text-lg font-medium text-gray-700 mb-3">
+                      {children}
+                    </h3>
+                  ),
+                  p: ({ children }) => (
+                    <p className="text-base text-gray-700 leading-7 mb-4">
+                      {children}
+                    </p>
+                  ),
+                  ul: ({ children }) => (
+                    <ul className="list-disc ml-6 text-gray-700 mb-4">
+                      {children}
+                    </ul>
+                  ),
+                  ol: ({ children }) => (
+                    <ol className="list-decimal ml-6 text-gray-700 mb-4">
+                      {children}
+                    </ol>
+                  ),
+                  code: ({ inline, children }) =>
+                    inline ? (
+                      <code className="bg-gray-200 text-red-500 rounded px-1">
+                        {children}
+                      </code>
+                    ) : (
+                      <pre className="bg-gray-800 text-white rounded p-4 overflow-auto text-sm">
+                        <code>{children}</code>
+                      </pre>
+                    ),
+                  table: ({ children }) => (
+                    <table className="table-auto border-collapse border border-gray-300 w-full text-sm text-gray-700 mb-6">
+                      {children}
+                    </table>
+                  ),
+                  th: ({ children }) => (
+                    <th className="border border-gray-300 bg-gray-100 px-4 py-2 text-left font-semibold">
+                      {children}
+                    </th>
+                  ),
+                  td: ({ children }) => (
+                    <td className="border border-gray-300 px-4 py-2">{children}</td>
+                  ),
+                }}
+              >
+                {section.content}
+              </ReactMarkdown>
             </CollapsibleSection>
           ))}
         </CollapsibleSection>
